@@ -5,34 +5,49 @@ import {
   highlightEdge,
   highlightNode,
   resetGraph,
+  selectNode,
+  unselectNodes,
+  updateDistance,
 } from "../utils/Dom.js";
 import { graph } from "./Settings.js";
 
 const distanceAlgorithm = async () => {
-  const selected = getSelectedNode();
-  if (!selected) {
+  const startNode = getSelectedNode();
+  if (!startNode) {
     document.body.appendChild(popup("Please select a node first !", "#dc143c"));
   } else {
     const queue = [];
-    document.querySelector("#graph-area").classList.add("animation");
-    selected.classList.remove("selected");
-    const selectedId = +selected.getAttribute("data-id");
+    const distances = {};
+    const visited = new Set();
 
-    queue.push(selectedId);
-    highlightNode(selectedId);
+    document.querySelector("#graph-area").classList.add("animation");
+    const startNodeId = +startNode.getAttribute("data-id");
+
+    distances[startNodeId] = 0;
+    queue.push(startNodeId);
+    visited.add(startNodeId);
+    highlightNode(startNodeId);
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    while (queue.length) {
+    while (queue.length > 0) {
       const current = queue.shift();
+      selectNode(current);
+
       for (const neighbor of graph.getNeighbors(current)) {
-        if (!getNodeById(neighbor).classList.contains("highlighted")) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          distances[neighbor] = distances[current] + 1;
+
           highlightEdge(current, neighbor);
-          await new Promise((resolve) => setTimeout(resolve, 500));
+          await new Promise((resolve) => setTimeout(resolve, 800));
+
           highlightNode(neighbor);
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          updateDistance(neighbor, distances[neighbor]);
+          await new Promise((resolve) => setTimeout(resolve, 1600));
           queue.push(neighbor);
         }
       }
+      unselectNodes();
     }
     await new Promise((resolve) => setTimeout(resolve, 1500));
     resetGraph();
