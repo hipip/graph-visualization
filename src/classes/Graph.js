@@ -93,6 +93,11 @@ export default class Graph {
     return neighbors;
   }
 
+  getRandomNode() {
+    if (this.nodes.length)
+      return this.nodes[Math.floor(Math.random() * this.nodes.length)].id;
+  }
+
   order() {
     return this.nodes.length;
   }

@@ -1,4 +1,5 @@
 import { distanceAlgorithm } from "./classes/Algorithms.js";
+import { graph } from "./classes/Settings.js";
 import { AnimArea } from "./components/AnimArea.js";
 import { Button } from "./components/Button.js";
 import { ButtonsArea } from "./components/ButtonsArea.js";

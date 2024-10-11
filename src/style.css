@@ -109,7 +109,7 @@ body {
 .edge {
   fill: none;
   stroke: var(--edge-stroke);
-  stroke-width: 2px;
+  stroke-width: 3px;
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
   animation: stroke-anim 2s ease forwards;
@@ -145,6 +145,14 @@ body {
 
 .main-title {
   font-weight: 900;
+}
+
+.graph-order,
+.graph-size,
+.graph-connected,
+.graph-is-tree {
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .btn {

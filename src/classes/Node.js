@@ -48,7 +48,7 @@ export default class Node {
     );
     distanceLabel.setAttribute("x", this.x - nodeRadius - 5);
     distanceLabel.setAttribute("y", this.y - nodeRadius - 5);
-    distanceLabel.textContent = "0";
+    distanceLabel.textContent = "∞";
     distanceLabel.classList.add("node-distance-label");
 
     container.appendChild(node);
