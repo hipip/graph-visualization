@@ -17,13 +17,11 @@ const GraphInfosArea = () => {
   size.classList.add("graph-size");
 
   const isconnected = document.createElement("p");
-  isconnected.textContent = `Est Connexe? ${
-    isConnected(graph) ? "Vrai" : "Faux"
-  }`;
+  isconnected.textContent = `Connexe? ${isConnected(graph) ? "Vrai" : "Faux"}`;
   isconnected.classList.add("graph-connected");
 
   const istree = document.createElement("p");
-  istree.textContent = `Est Arbre? ${isTree(graph) ? "Vrai" : "Faux"}`;
+  istree.textContent = `Arbre? ${isTree(graph) ? "Vrai" : "Faux"}`;
   istree.classList.add("graph-is-tree");
 
   container.appendChild(header);
@@ -40,10 +38,10 @@ const updateGraphInfosArea = () => {
     ".graph-order"
   ).textContent = `Ordre: ${graph.order()}`;
   document.querySelector(".graph-size").textContent = `Taille: ${graph.size()}`;
-  document.querySelector(".graph-connected").textContent = `Est Connexe? ${
+  document.querySelector(".graph-connected").textContent = `Connexe? ${
     isConnected(graph) ? "Vrai" : "Faux"
   }`;
-  document.querySelector(".graph-is-tree").textContent = `Est Arbre? ${
+  document.querySelector(".graph-is-tree").textContent = `Arbre? ${
     isTree(graph) ? "Vrai" : "Faux"
   }`;
 };
