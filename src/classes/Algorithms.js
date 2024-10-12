@@ -63,20 +63,30 @@ const distanceAlgorithm = async () => {
 };
 
 // return all the reached nodes from a DFS traversal
-const DFS = (graph, s, visited = {}, reached = new Set()) => {
-  if (visited[s]) return reached;
-  visited[s] = true;
-  reached.add(s);
-  for (const neighbor of graph.getNeighbors(s))
-    if (!visited[neighbor]) DFS(graph, neighbor, visited, reached);
-  return [...reached];
+const DFS = (graph, start) => {
+  const visited = new Set();
+  const reached = new Set();
+
+  const dfsHelper = (node) => {
+    if (visited.has(node)) return;
+    visited.add(node);
+    reached.add(node);
+
+    for (const neighbor of graph.getNeighbors(node)) {
+      dfsHelper(neighbor); // No need to check visited again
+    }
+  };
+
+  dfsHelper(start); // Start the recursive DFS from the initial node
+  return [...reached]; // Convert the Set to an array only when returning
 };
 
 const isConnected = (graph) => {
-  if (graph.order()) {
+  const n = graph.order();
+  if (n) {
     const startingNode = graph.getRandomNode();
     const reachedNodes = DFS(graph, startingNode);
-    if (reachedNodes.length === graph.order()) return true;
+    if (reachedNodes.length === n) return true;
   }
   return false;
 };
