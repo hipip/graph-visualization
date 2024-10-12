@@ -39,6 +39,7 @@ const distanceAlgorithm = async () => {
     while (queue.length > 0) {
       const current = queue.shift();
       selectNode(current);
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
       for (const neighbor of graph.getNeighbors(current)) {
         if (!visited.has(neighbor)) {
@@ -48,10 +49,7 @@ const distanceAlgorithm = async () => {
           await new Promise((resolve) => setTimeout(resolve, 800));
 
           highlightNode(neighbor);
-          distances[neighbor] = Math.min(
-            distances[neighbor],
-            distances[current] + 1
-          );
+          distances[neighbor] = distances[current] + 1;
           updateDistance(neighbor, distances[neighbor]);
           await new Promise((resolve) => setTimeout(resolve, 1600));
           queue.push(neighbor);

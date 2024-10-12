@@ -35,6 +35,17 @@ export const GraphArea = () => {
     "svg"
   );
   mainContainer.setAttribute("id", "graph-area");
+  mainContainer.setAttribute(
+    "viewBox",
+    `0 0 ${window.innerWidth * 0.5} ${window.innerHeight * 0.75}`
+  );
+
+  window.addEventListener("resize", () => {
+    mainContainer.setAttribute(
+      "viewBox",
+      `0 0 ${window.innerWidth * 0.5} ${window.innerHeight * 0.75}`
+    );
+  });
 
   const nodesContainer = document.createElementNS(
     "http://www.w3.org/2000/svg",

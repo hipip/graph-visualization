@@ -43,7 +43,7 @@ const updateDistance = (id, dist) => {
   const distLabel = document.querySelector(
     `.node[data-id="${id}"] .node-distance-label`
   );
-  distLabel.textContent = dist;
+  distLabel.textContent = dist === Infinity ? "∞" : dist;
 };
 
 const resetGraph = () => {
