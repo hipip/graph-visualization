@@ -1,3 +1,4 @@
+import { transitiveClosure } from "../classes/Algorithms.js";
 import { graph } from "../classes/Settings.js";
 import { getSelectedEdge, getSelectedNode } from "../utils/Dom.js";
 import { updateGraphInfosArea } from "./GraphInfosArea.js";

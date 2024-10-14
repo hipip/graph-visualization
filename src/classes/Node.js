@@ -1,5 +1,6 @@
 import { updateGraphInfosArea } from "../components/GraphInfosArea.js";
 import { graph, nodeRadius } from "./Settings.js";
+import { transitiveClosure } from "./Algorithms.js";
 
 export default class Node {
   constructor(id, name, x, y) {

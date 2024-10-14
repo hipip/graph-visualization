@@ -1,3 +1,5 @@
+import { GraphArea } from "../components/GraphArea.js";
+
 const getNodeById = (id) => {
   return document.querySelector(`.node[data-id="${id}"]`);
 };
@@ -46,6 +48,11 @@ const updateDistance = (id, dist) => {
   distLabel.textContent = dist === Infinity ? "∞" : dist;
 };
 
+const resetGraphAreaTwo = () => {
+  document.querySelector("#graph-area-two").remove();
+  document.querySelector("#main-area").appendChild(GraphArea("graph-area-two"));
+};
+
 const resetGraph = () => {
   [...document.querySelectorAll(".highlighted")].forEach((elem) => {
     elem.classList.remove("highlighted");
@@ -68,5 +75,6 @@ export {
   updateDistance,
   selectNode,
   unselectNodes,
+  resetGraphAreaTwo,
   resetGraph,
 };

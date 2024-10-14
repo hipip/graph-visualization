@@ -50,10 +50,6 @@ body {
   transition: flex 0.4s ease;
 }
 
-#graph-area-two .node-circle {
-  animation: node-circle-appear 2s ease forwards;
-}
-
 .node {
   transform-origin: center;
 }
@@ -137,6 +133,7 @@ body {
 
 #graph-area-two .special-edge {
   stroke-dasharray: 6, 10;
+  animation: none;
 }
 
 .graph-infos-area {

@@ -4,6 +4,7 @@ import {
   highlightEdge,
   highlightNode,
   resetGraph,
+  resetGraphAreaTwo,
   selectNode,
   unselectNodes,
   updateDistance,
@@ -96,6 +97,7 @@ const isTree = (graph) => {
 };
 
 const transitiveClosure = () => {
+  resetGraphAreaTwo();
   const clonned = graph.clone("graph-area-two");
   for (const node of clonned.nodes) {
     const reachedNodes = DFS(clonned, node.id);
