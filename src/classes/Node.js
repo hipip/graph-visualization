@@ -74,7 +74,9 @@ export default class Node {
       }
     }
   }
-  render() {
-    document.querySelector("#nodes-container").appendChild(this.element);
+  render(containerId) {
+    document
+      .querySelector(`#${containerId} #nodes-container`)
+      .appendChild(this.element);
   }
 }

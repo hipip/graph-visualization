@@ -29,21 +29,24 @@ const deleteNode = (e) => {
   }
 };
 
-export const GraphArea = () => {
+export const GraphArea = (id) => {
   const mainContainer = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "svg"
   );
-  mainContainer.setAttribute("id", "graph-area");
-  mainContainer.setAttribute(
-    "viewBox",
-    `0 0 ${window.innerWidth * 0.5} ${window.innerHeight * 0.75}`
-  );
+  mainContainer.setAttribute("id", id);
+
+  mainContainer.onload = () => {
+    mainContainer.setAttribute(
+      "viewBox",
+      `0 0 ${mainContainer.clientWidth} ${window.innerHeight * 0.8}`
+    );
+  };
 
   window.addEventListener("resize", () => {
     mainContainer.setAttribute(
       "viewBox",
-      `0 0 ${window.innerWidth * 0.5} ${window.innerHeight * 0.75}`
+      `0 0 ${mainContainer.clientWidth} ${window.innerHeight * 0.8}`
     );
   });
 

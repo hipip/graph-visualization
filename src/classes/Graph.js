@@ -3,9 +3,10 @@ import Edge from "./Edge.js";
 import Node from "./Node.js";
 
 export default class Graph {
-  constructor(nodes = [], edges = []) {
+  constructor(nodes = [], edges = [], containerId = "graph-area") {
     this.nodes = nodes;
     this.edges = edges;
+    this.containerId = containerId;
   }
 
   addNode(id, name, x, y) {
@@ -15,7 +16,7 @@ export default class Graph {
     } else {
       const newNode = new Node(id, name, x, y);
       this.nodes.push(newNode);
-      newNode.render();
+      newNode.render(this.containerId);
       return newNode;
     }
   }
@@ -26,7 +27,6 @@ export default class Graph {
 
   removeNode(id) {
     const toRemove = this.nodes.find((node) => node.id === id);
-    console.log(id);
     // remove dom node
     toRemove.element.remove();
     // remove dom edges
@@ -41,21 +41,25 @@ export default class Graph {
     );
   }
 
-  addEdge(nodeId1, nodeId2) {
+  addEdge(nodeId1, nodeId2, special = false) {
     const alreadyExists = this.edges.find(
       (e) =>
         (e.nodeId1 == nodeId1 && e.nodeId2 == nodeId2) ||
         (e.nodeId1 == nodeId2 && e.nodeId2 == nodeId1)
     );
-    if (alreadyExists) {
+    if (nodeId1 == nodeId2) {
+      console.log("can't add loop in simple graph");
+      return false;
+    } else if (alreadyExists) {
       console.log("Edge Already Exists");
       return false;
     } else {
-      const node1 = getNodeById(nodeId1);
-      const node2 = getNodeById(nodeId2);
+      const node1 = this.nodes.find((node) => node.id === +nodeId1);
+      const node2 = this.nodes.find((node) => node.id === +nodeId2);
+      console.log("here");
       if (node1 && node2) {
-        const newEdge = new Edge(parseInt(nodeId1), parseInt(nodeId2));
-        newEdge.render();
+        const newEdge = new Edge(parseInt(nodeId1), parseInt(nodeId2), special);
+        newEdge.render(this.containerId);
         this.edges.push(newEdge);
         return newEdge;
       } else {
@@ -96,6 +100,14 @@ export default class Graph {
   getRandomNode() {
     if (this.nodes.length)
       return this.nodes[Math.floor(Math.random() * this.nodes.length)].id;
+  }
+
+  clone(containerId) {
+    const clonned = new Graph([], [], containerId);
+    for (const node of this.nodes)
+      clonned.addNode(node.id, node.name, node.x, node.y);
+    for (const edge of this.edges) clonned.addEdge(edge.nodeId1, edge.nodeId2);
+    return clonned;
   }
 
   order() {

@@ -1,10 +1,10 @@
 import { getNodeById } from "../utils/Dom.js";
 
 export default class Edge {
-  constructor(nodeId1, nodeId2, weight = 0) {
+  constructor(nodeId1, nodeId2, special = false) {
     this.nodeId1 = nodeId1;
     this.nodeId2 = nodeId2;
-    this.weight = weight;
+    this.special = special;
     this.element = this.createEdgeElement();
   }
 
@@ -13,6 +13,8 @@ export default class Edge {
     edge.classList.add("edge");
     edge.setAttribute("data-id", `${this.nodeId1},${this.nodeId2}`);
     edge.addEventListener("click", this.selectEdge);
+
+    if (this.special) edge.classList.add("special-edge");
 
     const node1 = getNodeById(this.nodeId1);
     const node2 = getNodeById(this.nodeId2);
@@ -31,7 +33,9 @@ export default class Edge {
     e.currentTarget.classList.toggle("selected");
   }
 
-  render() {
-    document.querySelector("#edges-container").appendChild(this.element);
+  render(containerId) {
+    document
+      .querySelector(`#${containerId} #edges-container`)
+      .appendChild(this.element);
   }
 }

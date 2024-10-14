@@ -95,4 +95,14 @@ const isTree = (graph) => {
   return isConnected(graph) && graph.size() == graph.order() - 1;
 };
 
-export { distanceAlgorithm, isConnected, isTree };
+const transitiveClosure = () => {
+  const clonned = graph.clone("graph-area-two");
+  for (const node of clonned.nodes) {
+    const reachedNodes = DFS(clonned, node.id);
+    for (const reachedNode of reachedNodes) {
+      if (node.id !== reachedNode) clonned.addEdge(node.id, reachedNode, true);
+    }
+  }
+};
+
+export { distanceAlgorithm, isConnected, isTree, transitiveClosure };
