@@ -70,6 +70,7 @@ export default class Node {
         const nodeId2 = e.currentTarget.getAttribute("data-id");
         graph.addEdge(nodeId1, nodeId2);
         updateGraphInfosArea();
+        transitiveClosure();
 
         selected.classList.remove("selected");
       }

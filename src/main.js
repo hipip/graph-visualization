@@ -15,9 +15,6 @@ const BODY = document.body;
 
   const btnsArea = ButtonsArea();
   btnsArea.appendChild(Button("Calcul distance", "#dc143c", distanceAlgorithm));
-  btnsArea.appendChild(
-    Button("Fermeture Transitive", "#b047ff", transitiveClosure)
-  );
 
   BODY.appendChild(GraphInfosArea());
   BODY.appendChild(container);

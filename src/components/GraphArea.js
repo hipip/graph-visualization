@@ -10,6 +10,7 @@ const addNode = (e) => {
   graph.addNode(count, count, x, y);
   count++;
   updateGraphInfosArea();
+  transitiveClosure();
 };
 
 const deleteNode = (e) => {
@@ -27,6 +28,7 @@ const deleteNode = (e) => {
       graph.removeEdge(+nodeId1, +nodeId2);
     }
     updateGraphInfosArea();
+    transitiveClosure();
   }
 };
 

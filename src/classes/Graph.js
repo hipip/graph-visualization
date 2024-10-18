@@ -1,4 +1,3 @@
-import { getNodeById } from "../utils/Dom.js";
 import Edge from "./Edge.js";
 import Node from "./Node.js";
 
