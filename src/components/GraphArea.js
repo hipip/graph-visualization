@@ -43,12 +43,12 @@ export const GraphArea = (id) => {
     );
   };
 
-  window.addEventListener("resize", () => {
-    mainContainer.setAttribute(
-      "viewBox",
-      `0 0 ${mainContainer.clientWidth} ${window.innerHeight * 0.8}`
-    );
-  });
+  // window.addEventListener("resize", () => {
+  //   mainContainer.setAttribute(
+  //     "viewBox",
+  //     `0 0 ${mainContainer.clientWidth} ${window.innerHeight * 0.8}`
+  //   );
+  // });
 
   const nodesContainer = document.createElementNS(
     "http://www.w3.org/2000/svg",

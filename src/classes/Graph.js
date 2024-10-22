@@ -96,6 +96,18 @@ export default class Graph {
     return neighbors;
   }
 
+  getNeighborsNodes(id) {
+    const neighbors = [];
+    for (const edge of this.edges) {
+      if (edge.nodeId1 === id) {
+        neighbors.push(this.nodes.find((node) => node.id === edge.nodeId2));
+      } else if (edge.nodeId2 == id) {
+        neighbors.push(this.nodes.find((node) => node.id === edge.nodeId1));
+      }
+    }
+    return neighbors;
+  }
+
   getRandomNode() {
     if (this.nodes.length)
       return this.nodes[Math.floor(Math.random() * this.nodes.length)].id;

@@ -117,24 +117,28 @@ const coloringWelshPowell = () => {
   const nodes = graph.nodes.sort((u, v) =>
     graph.nodeDegree(u.id) > graph.nodeDegree(v.id) ? -1 : 1
   );
-  let k = 0;
+  let k;
   while (true) {
     for (let i = 0; i < nodes.length; i++) {
       k = randomColor();
       const u = nodes[i];
       if (!u.color) {
         u.color = k;
-        colorizeNode(u.id, k);
-      }
-      for (let j = 0; j < nodes.length; j++) {
-        const v = nodes[j];
-        if (!v.color && !graph.areAdjacent(u.id, v.id)) {
-          v.color = k;
-          colorizeNode(v.id, k);
+        colorizeNode(u.id, u.color);
+        for (let j = 0; j < nodes.length; j++) {
+          const v = nodes[j];
+          if (
+            !v.color &&
+            !graph
+              .getNeighborsNodes(v.id)
+              .some((neighbor) => neighbor.color === k)
+          ) {
+            v.color = k;
+            colorizeNode(v.id, v.color);
+          }
         }
       }
     }
-
     if (nodes.every((node) => node.color)) break;
   }
 };

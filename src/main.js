@@ -4,7 +4,6 @@ import {
   reset,
   transitiveClosure,
 } from "./classes/Algorithms.js";
-import { graph } from "./classes/Settings.js";
 import { Button } from "./components/Button.js";
 import { ButtonsArea } from "./components/ButtonsArea.js";
 import { GraphArea } from "./components/GraphArea.js";
