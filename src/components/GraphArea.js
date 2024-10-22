@@ -1,4 +1,3 @@
-import { transitiveClosure } from "../classes/Algorithms.js";
 import { graph } from "../classes/Settings.js";
 import { getSelectedEdge, getSelectedNode } from "../utils/Dom.js";
 import { updateGraphInfosArea } from "./GraphInfosArea.js";
@@ -10,7 +9,6 @@ const addNode = (e) => {
   graph.addNode(count, count, x, y);
   count++;
   updateGraphInfosArea();
-  transitiveClosure();
 };
 
 const deleteNode = (e) => {
@@ -28,7 +26,6 @@ const deleteNode = (e) => {
       graph.removeEdge(+nodeId1, +nodeId2);
     }
     updateGraphInfosArea();
-    transitiveClosure();
   }
 };
 
@@ -39,7 +36,7 @@ export const GraphArea = (id) => {
   );
   mainContainer.setAttribute("id", id);
 
-  mainContainer.onload = () => {
+  window.onload = () => {
     mainContainer.setAttribute(
       "viewBox",
       `0 0 ${mainContainer.clientWidth} ${window.innerHeight * 0.8}`

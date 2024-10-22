@@ -101,6 +101,21 @@ export default class Graph {
       return this.nodes[Math.floor(Math.random() * this.nodes.length)].id;
   }
 
+  nodeDegree(nodeId) {
+    return this.edges.reduce((degree, edge) => {
+      if (edge.nodeId1 === nodeId || edge.nodeId2 === nodeId) return degree + 1;
+      return degree;
+    }, 0);
+  }
+
+  areAdjacent(nodeId1, nodeId2) {
+    return this.edges.some(
+      (edge) =>
+        (edge.nodeId1 === nodeId1 && edge.nodeId2 === nodeId2) ||
+        (edge.nodeId1 === nodeId2 && edge.nodeId2 === nodeId1)
+    );
+  }
+
   clone(containerId) {
     const clonned = new Graph([], [], containerId);
     for (const node of this.nodes)

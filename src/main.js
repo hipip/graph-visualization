@@ -1,4 +1,9 @@
-import { distanceAlgorithm, transitiveClosure } from "./classes/Algorithms.js";
+import {
+  coloringWelshPowell,
+  distanceAlgorithm,
+  reset,
+  transitiveClosure,
+} from "./classes/Algorithms.js";
 import { graph } from "./classes/Settings.js";
 import { Button } from "./components/Button.js";
 import { ButtonsArea } from "./components/ButtonsArea.js";
@@ -14,7 +19,14 @@ const BODY = document.body;
   container.appendChild(GraphArea("graph-area-two"));
 
   const btnsArea = ButtonsArea();
-  btnsArea.appendChild(Button("Calcul distance", "#dc143c", distanceAlgorithm));
+  btnsArea.appendChild(Button("Calcul distance", "#abf43c", distanceAlgorithm));
+  btnsArea.appendChild(
+    Button("Fermeture Transitive", "#10fdc0", transitiveClosure)
+  );
+  btnsArea.appendChild(
+    Button("Coloration Welsh et Powell", "#fe32df", coloringWelshPowell)
+  );
+  btnsArea.appendChild(Button("reset", "#ff2020", reset));
 
   BODY.appendChild(GraphInfosArea());
   BODY.appendChild(container);

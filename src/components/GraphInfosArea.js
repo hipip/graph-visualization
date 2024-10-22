@@ -5,7 +5,7 @@ const GraphInfosArea = () => {
   const container = document.createElement("div");
   container.classList.add("graph-infos-area");
   const header = document.createElement("h1");
-  header.textContent = "TP Graphes et Optimisation";
+  header.textContent = "TP GO 1";
   header.classList.add("main-title");
 
   const order = document.createElement("p");

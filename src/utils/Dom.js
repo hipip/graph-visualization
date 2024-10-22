@@ -4,6 +4,11 @@ const getNodeById = (id) => {
   return document.querySelector(`.node[data-id="${id}"]`);
 };
 
+const colorizeNode = (id, color) => {
+  const n = getNodeById(id).querySelector(".node-circle");
+  if (n) n.style.fill = color;
+};
+
 const getEdge = (node1Id, node2Id) => {
   const e = document.querySelector(`.edge[data-id="${node1Id},${node2Id}"]`);
   if (e) return e;
@@ -53,6 +58,14 @@ const resetGraphAreaTwo = () => {
   document.querySelector("#main-area").appendChild(GraphArea("graph-area-two"));
 };
 
+const showGraphAreaTwo = () => {
+  document.querySelector("#graph-area-two").classList.add("active");
+};
+
+const hideGraphAreaTwo = () => {
+  document.querySelector("#graph-area-two").classList.remove("active");
+};
+
 const resetGraph = () => {
   [...document.querySelectorAll(".highlighted")].forEach((elem) => {
     elem.classList.remove("highlighted");
@@ -66,8 +79,15 @@ const resetGraph = () => {
   document.querySelector("#graph-area").classList.remove("animation");
 };
 
+const resetColors = () => {
+  [...document.querySelectorAll(".node-circle")].forEach(
+    (nodeCircle) => (nodeCircle.style.fill = "")
+  );
+};
+
 export {
   getNodeById,
+  colorizeNode,
   getSelectedNode,
   getSelectedEdge,
   highlightNode,
@@ -77,4 +97,7 @@ export {
   unselectNodes,
   resetGraphAreaTwo,
   resetGraph,
+  resetColors,
+  showGraphAreaTwo,
+  hideGraphAreaTwo,
 };

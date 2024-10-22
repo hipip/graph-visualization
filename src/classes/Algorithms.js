@@ -1,11 +1,16 @@
 import { popup } from "../components/popup.js";
+import { randomColor } from "../utils/Colors.js";
 import {
+  colorizeNode,
   getSelectedNode,
+  hideGraphAreaTwo,
   highlightEdge,
   highlightNode,
+  resetColors,
   resetGraph,
   resetGraphAreaTwo,
   selectNode,
+  showGraphAreaTwo,
   unselectNodes,
   updateDistance,
 } from "../utils/Dom.js";
@@ -58,8 +63,6 @@ const distanceAlgorithm = async () => {
       }
       unselectNodes();
     }
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    resetGraph();
   }
 };
 
@@ -98,6 +101,7 @@ const isTree = (graph) => {
 
 const transitiveClosure = () => {
   resetGraphAreaTwo();
+  showGraphAreaTwo();
   const clonned = graph.clone("graph-area-two");
   for (const node of clonned.nodes) {
     const reachedNodes = DFS(clonned, node.id);
@@ -107,4 +111,45 @@ const transitiveClosure = () => {
   }
 };
 
-export { distanceAlgorithm, isConnected, isTree, transitiveClosure };
+const coloringWelshPowell = () => {
+  resetColors();
+  for (const node of graph.nodes) node.color = undefined;
+  const nodes = graph.nodes.sort((u, v) =>
+    graph.nodeDegree(u.id) > graph.nodeDegree(v.id) ? -1 : 1
+  );
+  let k = 0;
+  while (true) {
+    for (let i = 0; i < nodes.length; i++) {
+      k = randomColor();
+      const u = nodes[i];
+      if (!u.color) {
+        u.color = k;
+        colorizeNode(u.id, k);
+      }
+      for (let j = 0; j < nodes.length; j++) {
+        const v = nodes[j];
+        if (!v.color && !graph.areAdjacent(u.id, v.id)) {
+          v.color = k;
+          colorizeNode(v.id, k);
+        }
+      }
+    }
+
+    if (nodes.every((node) => node.color)) break;
+  }
+};
+
+const reset = () => {
+  resetGraph();
+  resetColors();
+  hideGraphAreaTwo();
+};
+
+export {
+  distanceAlgorithm,
+  isConnected,
+  isTree,
+  transitiveClosure,
+  coloringWelshPowell,
+  reset,
+};
