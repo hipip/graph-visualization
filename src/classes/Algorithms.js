@@ -162,42 +162,52 @@ const dsaturColoring = () => {
     color: null,
   }));
 
+  // Trier les sommets par degré décroissant
   nodes.sort((a, b) => b.degree - a.degree);
 
   const colors = [];
 
+  // tant qu'il reste des sommets non colorés
   while (nodes.some((node) => node.color === null)) {
+    // Trie les sommets par saturation décroissante. En cas d'égalité, utilise le degré.
     nodes.sort((a, b) => {
       if (b.saturation !== a.saturation) return b.saturation - a.saturation;
       return b.degree - a.degree;
     });
 
+    // Sélectionne le sommet non coloré avec la saturation maximale
     const node = nodes.find((n) => n.color === null);
 
+    // Récupère les couleurs utilisées par les voisins du sommet
     const neighborColors = new Set(
       graph.getNeighbors(node.id).map((neighbor) => {
         const neighborNode = nodes.find((n) => n.id === neighbor);
-        return neighborNode ? neighborNode.color : null;
+        return neighborNode ? neighborNode.color : null; // Prend la couleur du voisin si elle existe
       })
     );
 
+    // Cherche la plus petite couleur disponible pour ce sommet
     let color = colors.find((c) => !neighborColors.has(c));
     if (!color) {
+      // Si aucune couleur existante n'est disponible, génère une nouvelle couleur
       color = randomColor();
       colors.push(color);
     }
 
+    // Associe la couleur au sommet
     node.color = color;
     colorizeNode(node.id, color);
 
+    // Met à jour la saturation de tous les voisins non colorés
     graph.getNeighbors(node.id).forEach((neighbor) => {
       const neighborNode = nodes.find((n) => n.id === neighbor);
       if (neighborNode && neighborNode.color === null) {
-        neighborNode.saturation++;
+        neighborNode.saturation++; // Incrémente la saturation (nouvelle couleur ajoutée)
       }
     });
   }
 
+  // Affiche le nombre chromatique (nombre de couleurs utilisées)
   console.log("Nombre chromatique", colors.length);
 };
 
