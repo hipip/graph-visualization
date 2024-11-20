@@ -55,7 +55,6 @@ export default class Graph {
     } else {
       const node1 = this.nodes.find((node) => node.id === +nodeId1);
       const node2 = this.nodes.find((node) => node.id === +nodeId2);
-      console.log("here");
       if (node1 && node2) {
         const newEdge = new Edge(parseInt(nodeId1), parseInt(nodeId2), special);
         newEdge.render(this.containerId);

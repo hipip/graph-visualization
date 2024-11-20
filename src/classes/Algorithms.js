@@ -111,36 +111,94 @@ const transitiveClosure = () => {
   }
 };
 
-const coloringWelshPowell = () => {
+const welshPowellColoring = () => {
   resetColors();
   for (const node of graph.nodes) node.color = undefined;
+
   const nodes = graph.nodes.sort((u, v) =>
     graph.nodeDegree(u.id) > graph.nodeDegree(v.id) ? -1 : 1
   );
   let k;
-  while (true) {
-    for (let i = 0; i < nodes.length; i++) {
+  let cpt = 0;
+  let chromaticNumber = 0;
+  let res = [];
+  for (let i = 0; i < nodes.length; i++) {
+    const u = nodes[i];
+    if (!u.color) {
       k = randomColor();
-      const u = nodes[i];
-      if (!u.color) {
-        u.color = k;
-        colorizeNode(u.id, u.color);
-        for (let j = 0; j < nodes.length; j++) {
-          const v = nodes[j];
-          if (
-            !v.color &&
-            !graph
-              .getNeighborsNodes(v.id)
-              .some((neighbor) => neighbor.color === k)
-          ) {
-            v.color = k;
-            colorizeNode(v.id, v.color);
-          }
+      chromaticNumber++;
+      u.color = k;
+      colorizeNode(u.id, u.color);
+      cpt++;
+      res.push([u.id, chromaticNumber]);
+
+      for (let j = 0; j < nodes.length; j++) {
+        const v = nodes[j];
+        if (
+          !v.color &&
+          !graph
+            .getNeighborsNodes(v.id)
+            .some((neighbor) => neighbor.color === k)
+        ) {
+          v.color = k;
+          colorizeNode(v.id, v.color);
+          res.push([v.id, chromaticNumber]);
+          cpt++;
         }
       }
     }
-    if (nodes.every((node) => node.color)) break;
+    if (cpt === graph.order()) break;
   }
+  console.log("nombre chromatique = ", chromaticNumber);
+  console.log(res);
+};
+
+const dsaturColoring = () => {
+  resetColors();
+  const nodes = graph.nodes.map((node) => ({
+    id: node.id,
+    degree: graph.nodeDegree(node.id),
+    saturation: 0,
+    color: null,
+  }));
+
+  nodes.sort((a, b) => b.degree - a.degree);
+
+  const colors = [];
+
+  while (nodes.some((node) => node.color === null)) {
+    nodes.sort((a, b) => {
+      if (b.saturation !== a.saturation) return b.saturation - a.saturation;
+      return b.degree - a.degree;
+    });
+
+    const node = nodes.find((n) => n.color === null);
+
+    const neighborColors = new Set(
+      graph.getNeighbors(node.id).map((neighbor) => {
+        const neighborNode = nodes.find((n) => n.id === neighbor);
+        return neighborNode ? neighborNode.color : null;
+      })
+    );
+
+    let color = colors.find((c) => !neighborColors.has(c));
+    if (!color) {
+      color = randomColor();
+      colors.push(color);
+    }
+
+    node.color = color;
+    colorizeNode(node.id, color);
+
+    graph.getNeighbors(node.id).forEach((neighbor) => {
+      const neighborNode = nodes.find((n) => n.id === neighbor);
+      if (neighborNode && neighborNode.color === null) {
+        neighborNode.saturation++;
+      }
+    });
+  }
+
+  console.log("Nombre chromatique", colors.length);
 };
 
 const reset = () => {
@@ -154,6 +212,7 @@ export {
   isConnected,
   isTree,
   transitiveClosure,
-  coloringWelshPowell,
+  welshPowellColoring as coloringWelshPowell,
   reset,
+  dsaturColoring,
 };
