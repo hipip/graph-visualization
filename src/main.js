@@ -1,7 +1,9 @@
 import {
   coloringWelshPowell,
   distanceAlgorithm,
+  dsaturColoring,
   reset,
+  rlfColoring,
   transitiveClosure,
 } from "./classes/Algorithms.js";
 import { Button } from "./components/Button.js";
@@ -25,7 +27,8 @@ const BODY = document.body;
   btnsArea.appendChild(
     Button("Coloration Welsh et Powell", "#fe32df", coloringWelshPowell)
   );
-  btnsArea.appendChild(Button("DSATUR", "#edd24f", coloringWelshPowell));
+  btnsArea.appendChild(Button("DSATUR", "#edd24f", dsaturColoring));
+  btnsArea.appendChild(Button("RLF", "#2dfecd", rlfColoring));
   btnsArea.appendChild(Button("reset", "#ff2020", reset));
 
   BODY.appendChild(GraphInfosArea());

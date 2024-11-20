@@ -211,6 +211,63 @@ const dsaturColoring = () => {
   console.log("Nombre chromatique", colors.length);
 };
 
+const rlfColoring = () => {
+  resetColors();
+
+  const nodes = graph.nodes.map((node) => ({
+    id: node.id,
+    neighbors: new Set(graph.getNeighbors(node.id)),
+    color: null,
+  }));
+
+  const colors = [];
+
+  // Tant qu'il reste des sommets non colorés
+  while (nodes.some((node) => node.color === null)) {
+    // Groupe indépendant des sommets pour la couleur actuelle
+    const independentSet = [];
+    const remainingNodes = nodes.filter((node) => node.color === null);
+
+    // Trouve le sommet avec le plus grand nombre de voisins non colorés
+    let currentNode = remainingNodes.reduce((maxNode, node) => {
+      const uncoloredNeighbors = [...node.neighbors].filter((neighborId) =>
+        nodes.find((n) => n.id === neighborId && n.color === null)
+      );
+      return uncoloredNeighbors.length > maxNode.neighbors.size
+        ? node
+        : maxNode;
+    }, remainingNodes[0]);
+
+    // Génère une nouvelle couleur
+    const newColor = randomColor();
+    colors.push(newColor);
+
+    // Tant qu'il reste des sommets compatibles pour l'ensemble indépendant
+    while (currentNode) {
+      // Ajoute le sommet courant à l'ensemble indépendant
+      independentSet.push(currentNode);
+      currentNode.color = newColor;
+      colorizeNode(currentNode.id, newColor);
+
+      // Supprime les voisins du sommet courant des candidats
+      remainingNodes.forEach((node) => {
+        if (currentNode.neighbors.has(node.id)) {
+          node.neighbors.delete(currentNode.id);
+        }
+      });
+
+      // Recherche le prochain sommet pour l'ensemble indépendant
+      remainingNodes.splice(remainingNodes.indexOf(currentNode), 1);
+      currentNode = remainingNodes.find((node) =>
+        independentSet.every((indepNode) => !indepNode.neighbors.has(node.id))
+      );
+    }
+  }
+
+  // Affiche le nombre chromatique
+  console.log("Nombre chromatique :", colors.length);
+};
+
 const reset = () => {
   resetGraph();
   resetColors();
@@ -225,4 +282,5 @@ export {
   welshPowellColoring as coloringWelshPowell,
   reset,
   dsaturColoring,
+  rlfColoring,
 };
