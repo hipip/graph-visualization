@@ -26,6 +26,10 @@ button {
   cursor: pointer;
 }
 
+button {
+  font-family: inherit;
+}
+
 #main-area {
   display: flex;
   flex-direction: row;
