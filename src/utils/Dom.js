@@ -1,4 +1,5 @@
 import { GraphArea } from "../components/GraphArea.js";
+import HelpScreen from "../components/HelpScreen.js";
 
 const getNodeById = (id) => {
   return document.querySelector(`.node[data-id="${id}"]`);
@@ -85,6 +86,11 @@ const resetColors = () => {
   );
 };
 
+const showHelpScreen = () => {
+  if (!document.querySelector("#help-screen"))
+    document.body.appendChild(HelpScreen());
+};
+
 export {
   getNodeById,
   colorizeNode,
@@ -100,4 +106,5 @@ export {
   resetColors,
   showGraphAreaTwo,
   hideGraphAreaTwo,
+  showHelpScreen,
 };

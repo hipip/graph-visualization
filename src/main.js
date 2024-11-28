@@ -10,6 +10,7 @@ import { Button } from "./components/Button.js";
 import { ButtonsArea } from "./components/ButtonsArea.js";
 import { GraphArea } from "./components/GraphArea.js";
 import { GraphInfosArea } from "./components/GraphInfosArea.js";
+import { showHelpScreen } from "./utils/Dom.js";
 
 const BODY = document.body;
 
@@ -31,7 +32,11 @@ const BODY = document.body;
   btnsArea.appendChild(Button("RLF", "#2dfecd", rlfColoring));
   btnsArea.appendChild(Button("reset", "#ff2020", reset));
 
+  const helpBtn = Button("?", "#ef4531", () => showHelpScreen());
+  helpBtn.className = "help-btn";
+
   BODY.appendChild(GraphInfosArea());
   BODY.appendChild(container);
   BODY.appendChild(btnsArea);
+  BODY.appendChild(helpBtn);
 })();

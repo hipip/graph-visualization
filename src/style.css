@@ -22,6 +22,10 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 #main-area {
   display: flex;
   flex-direction: row;
@@ -208,4 +212,63 @@ body {
 .popup-text {
   font-size: 1.4rem;
   font-weight: 600;
+}
+
+.help-btn {
+  position: fixed;
+  z-index: 9;
+  top: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: 50%;
+  transition: 0.3s ease;
+}
+
+.help-btn:hover {
+  background-color: white;
+  color: var(--graph-area-bg);
+}
+
+#help-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  max-width: 500px;
+  transition: 0.3s ease;
+}
+
+#close-help-screen {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 900;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: rgb(255, 60, 60);
+}
+
+#help-screen.close {
+  transform: translate(-50%, -200%);
+  opacity: 0;
 }
